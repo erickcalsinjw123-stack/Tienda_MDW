@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<body>
+
+
+<footer th:fragment="pie" class="site-footer bg-dark text-white mt-auto">
+    <div class="container py-5">
+        <div class="row g-4">
+            <div class="col-lg-4">
+                <a class="footer-brand" th:href="@{/}"><i class="bi bi-cpu me-2"></i>Tech<span>Store</span></a>
+                <p class="footer-copy mt-3 mb-0">Tecnología confiable para trabajar, crear y disfrutar cada día.</p>
+            </div>
+            <div class="col-6 col-lg-2">
+                <h2 class="footer-title">Explorar</h2>
+                <a class="footer-link" th:href="@{/#productos}">Productos</a>
+                <a class="footer-link" th:href="@{/contacto}">Contacto</a>
+                <a class="footer-link" th:href="@{/iniciarSesion}">Mi cuenta</a>
+            </div>
+            <div class="col-6 col-lg-3">
+                <h2 class="footer-title">Atención</h2>
+                <p class="footer-detail"><i class="bi bi-telephone me-2"></i>999 999 999</p>
+                <p class="footer-detail"><i class="bi bi-envelope me-2"></i>contacto@techstore.com</p>
+                <p class="footer-detail"><i class="bi bi-clock me-2"></i>Lun - sáb · 9:00 - 19:00</p>
+            </div>
+            <div class="col-lg-3">
+                <h2 class="footer-title">Gestión</h2>
+                <p class="footer-copy">Administra el catálogo y mantén tus productos actualizados.</p>
+                <a class="btn btn-outline-light btn-sm footer-admin" th:href="@{/administracion}"><i class="bi bi-speedometer2 me-2"></i>Ir a administración</a>
+            </div>
+        </div>
+        <div class="footer-bottom mt-5 pt-3">
+            <small>&copy; 2026 TechStore. Todos los derechos reservados.</small>
+            <span><i class="bi bi-shield-check me-1"></i>Compra con confianza</span>
+        </div>
+    </div>
+</footer>
+</body>
+</html>

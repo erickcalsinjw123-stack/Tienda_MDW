@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/header :: head('Iniciar sesión - TechStore', '/css/index.css')}"></head>
+<body class="d-flex flex-column min-vh-100 bg-body-tertiary">
+    
+    <header th:replace="~{fragments/header :: menu}"></header>
+
+    <main class="container py-5 flex-grow-1">
+       
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-8 col-lg-5">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body p-4 p-md-5">
+                        <div class="text-center mb-4">
+                            <i class="bi bi-person-circle text-primary fs-1"></i>
+                            <h1 class="h3 mt-2">Iniciar Sesión</h1>
+                            <p class="text-muted mb-0">Ingresa a tu cuenta de TechStore</p>
+                        </div>
+
+                        <div id="alertaLogin" class="alert d-none" role="alert"></div>
+
+                        <form id="formLogin">
+                            <div class="mb-3">
+                                <label for="correo" class="form-label">Correo electrónico</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+                                    <input type="email" class="form-control" id="correo" placeholder="ejemplo@correo.com" required>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="password" class="form-label">Contraseña</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="bi bi-lock"></i></span>
+                                    <input type="password" class="form-control" id="password" placeholder="Mínimo 6 caracteres" minlength="6" required>
+                                </div>
+                            </div>
+
+                            <div class="form-check mb-4">
+                                <input class="form-check-input" type="checkbox" id="RecordarCuenta">
+                                <label class="form-check-label" for="RecordarCuenta">Recordarme</label>
+                            </div>
+
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-primary"><i class="bi bi-box-arrow-in-right me-2"></i>Iniciar sesión</button>
+                            </div>
+                        </form>
+
+                        <p class="text-center mt-4 mb-0">¿No tienes una cuenta? <a th:href="@{/registro}">Registrarse</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer th:replace="~{fragments/footer :: pie}"></footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script th:src="@{/js/autenticacion.js}"></script>
+</body>
+</html>

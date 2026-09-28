@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Administración - TechStore</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+  <link th:href="@{/css/index.css}" rel="stylesheet">
+  <link th:href="@{/css/administracion.css}" rel="stylesheet">
+</head>
+<body class="bg-body-tertiary">
+  
+  <nav class="navbar navbar-expand-lg navbar-dark bg-primary site-navbar sticky-top">
+    <div class="container">
+      <a class="navbar-brand fw-bold d-flex align-items-center gap-2" th:href="@{/}">
+        <span class="brand-mark"><i class="bi bi-cpu"></i></span>
+        <span>Tech<span class="brand-accent">Store</span></span>
+      </a>
+      <div class="d-flex align-items-center gap-2 ms-auto">
+        <a th:href="@{/}" class="btn btn-light btn-sm">Volver a tienda</a>
+        <button id="btnNuevo" class="btn btn-outline-light btn-sm">Nuevo</button>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container py-4 admin-shell">
+    <div class="d-flex flex-wrap justify-content-between align-items-end gap-3 mb-4">
+      <div><span class="eyebrow">CENTRO DE CONTROL</span><h1 class="display-6 fw-bold mt-2 mb-1">Administración</h1><p class="text-secondary mb-0">Gestiona tu catálogo de forma rápida y ordenada.</p></div>
+      <span class="admin-status"><i class="bi bi-circle-fill me-2"></i>Catálogo activo</span>
+    </div>
+
+    <div class="row g-3 mb-4">
+      <div class="col-md-4"><div class="admin-stat"><span class="admin-stat-icon"><i class="bi bi-box-seam"></i></span><div><small>Productos publicados</small><strong id="totalProductos">0</strong></div></div></div>
+      <div class="col-md-4"><div class="admin-stat"><span class="admin-stat-icon stat-cyan"><i class="bi bi-tags"></i></span><div><small>Categorías activas</small><strong id="totalCategorias">0</strong></div></div></div>
+      <div class="col-md-4"><div class="admin-stat"><span class="admin-stat-icon stat-dark"><i class="bi bi-currency-dollar"></i></span><div><small>Precio promedio</small><strong id="precioPromedio">S/ 0.00</strong></div></div></div>
+    </div>
+    
+    <div id="alerta" class="alert d-none" role="alert"></div>
+
+    <div class="row g-4">
+     
+      <aside class="col-lg-4">
+        <div class="card border-0 shadow-sm sticky-form admin-form-card">
+          <div class="card-body">
+            <div class="d-flex justify-content-between align-items-center mb-3"><div><span class="eyebrow">INVENTARIO</span><h2 class="h4 mb-0 mt-1" id="tituloFormulario">Nuevo producto</h2></div><i class="bi bi-pencil-square form-heading-icon"></i></div>
+
+            <form id="formProducto">
+              <input type="hidden" id="productoIndex">
+
+              <div class="mb-3">
+                <label class="form-label">Nombre</label>
+                <input id="nombre" class="form-control" type="text" required>
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label">Categoría</label>
+                <select id="categoria" class="form-select" required>
+                  <option value="Tecnología">Tecnología</option>
+                  <option value="Prearmados">Prearmados</option>
+                  <option value="Componentes">Componentes</option>
+                </select>
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label">Precio</label>
+                <input id="precio" class="form-control" type="number" min="0" step="0.01" required>
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label">Imagen</label>
+                <input id="imagen" class="form-control" type="text" placeholder="img/ejemplo.png" required>
+              </div>
+
+              <div class="mb-3">
+                <label class="form-label">Descripción</label>
+                <textarea id="descripcion" class="form-control" rows="3" required></textarea>
+              </div>
+
+              <div class="d-grid gap-2">
+                <button type="submit" class="btn btn-primary">Guardar producto</button>
+                <button type="button" id="btnCancelar" class="btn btn-outline-secondary">Cancelar</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </aside>
+
+      
+      <section class="col-lg-8">
+        <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-3">
+          <div><h2 class="h4 mb-1">Productos publicados</h2><p class="text-secondary small mb-0">Edita la información visible para tus clientes.</p></div>
+          <div class="d-flex gap-2 admin-filters"><div class="input-group input-group-sm"><span class="input-group-text bg-white"><i class="bi bi-search"></i></span><input id="buscarProducto" type="search" class="form-control" placeholder="Buscar..."></div><select id="filtrarCategoria" class="form-select form-select-sm"><option value="">Todas las categorías</option><option value="Tecnología">Tecnología</option><option value="Prearmados">Prearmados</option><option value="Componentes">Componentes</option></select></div>
+        </div>
+        <div id="listaProductos" class="row g-4">
+          <div class="col-xl-3 col-lg-4 col-md-6 producto-item" th:each="producto : ${productos}"
+               th:attr="data-nombre=${producto.nombre},data-categoria=${producto.categoria},data-precio=${producto.precio},data-imagen=${producto.imagen},data-descripcion=${producto.descripcion}">
+            <div class="card h-100 border-0 shadow-sm">
+              <div class="img-box"><img th:src="${producto.imagen}" th:alt="${producto.nombre}" style="max-width:100%; max-height:180px; object-fit:contain;"></div>
+              <div class="card-body d-flex flex-column">
+                <h4 class="h6" th:text="${producto.nombre}">Producto</h4>
+                <p class="small text-muted mb-3" th:text="${producto.descripcion}">Descripción</p>
+                <div class="mt-auto d-flex gap-2">
+                  <button class="btn btn-sm btn-primary flex-fill editar-btn" type="button">Editar</button>
+                  <button class="btn btn-sm btn-outline-danger flex-fill eliminar-btn" type="button">Eliminar</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script th:src="@{/js/administracion.js}"></script>
+</body>
+</html>

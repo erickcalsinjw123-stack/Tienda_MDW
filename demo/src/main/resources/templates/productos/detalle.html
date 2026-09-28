@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{fragments/header :: head(${titulo}, '/css/index.css')}"></head>
+
+<body class="d-flex flex-column min-vh-100 bg-body-tertiary">
+   
+    <header th:replace="~{fragments/header :: menu}"></header>
+    
+    <main class="container py-5 flex-grow-1" th:if="${producto != null}">
+        <div class="row g-5 align-items-center">
+            <div class="col-md-5 text-center"><img class="img-fluid" th:src="${producto.imagen}"
+                    th:alt="${producto.nombre}"></div>
+          
+            <div class="col-md-7">
+                <span class="badge text-bg-secondary mb-2" th:text="${producto.categoria}">Categoría</span>
+                <h1 th:text="${producto.nombre}">Producto</h1>
+                <p class="lead" th:text="${producto.descripcion}">Descripción</p>
+                <p class="h3 text-primary mb-4">S/ <span
+                        th:text="${#numbers.formatDecimal(producto.precio, 1, 2)}">0.00</span></p>
+                <h2 class="h5">Especificaciones</h2>
+                <ul class="list-group mb-4">
+                    <li class="list-group-item" th:each="especificacion : ${producto.especificaciones}"
+                        th:text="${especificacion}">Especificación</li>
+                </ul>
+                <a class="btn btn-outline-primary" th:href="@{/#productos}">Volver al catálogo</a>
+            </div>
+        </div>
+    </main>
+    
+    <main class="container py-5 flex-grow-1" th:unless="${producto != null}">
+        <h1>Producto no encontrado</h1>
+        <a class="btn btn-primary" th:href="@{/#productos}">Volver al catálogo</a>
+    </main>
+    <footer th:replace="~{fragments/footer :: pie}"></footer>
+</body>
+
+</html>

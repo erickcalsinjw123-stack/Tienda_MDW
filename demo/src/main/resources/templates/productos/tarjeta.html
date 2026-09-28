@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<body>
+
+<article th:fragment="tarjeta(producto)" class="card producto-card h-100 border-0 shadow-sm">
+    
+    <div class="img-box">
+        <img th:src="${producto.imagen}" th:alt="${producto.nombre}" onerror="this.onerror=null;this.src='/img/FuentePoder.png';">
+    </div>
+    
+    <div class="card-body d-flex flex-column">
+        <span class="badge text-bg-secondary align-self-start mb-2" th:text="${producto.categoria}">Categoría</span>
+        <h2 class="h6 fw-bold" th:text="${producto.nombre}">Producto</h2>
+        <p class="small text-muted" th:text="${producto.descripcion}">Descripción</p>
+        <div class="mt-auto">
+            <p class="fw-bold text-primary mb-3">S/ <span th:text="${#numbers.formatDecimal(producto.precio, 1, 2)}">0.00</span></p>
+            <a class="btn btn-sm btn-outline-primary w-100 detalle-btn" th:href="@{/productos/{id}(id=${producto.id})}">Ver detalle</a>
+        </div>
+    </div>
+</article>
+</body>
+</html>
